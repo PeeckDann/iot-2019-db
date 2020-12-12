@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity(name = "printer")
@@ -25,22 +27,23 @@ public class Printer {
     @Column(name = "design", length = 45)
     private String design;
 
-    @Column(name = "workspace_id")
-    private Integer workspaceId;
+    @ManyToOne
+    @JoinColumn(name = "workspace_id")
+    private Workspace workspace;
 
     public Printer() {
     }
 
-    public Printer(String name, String format, String design, Integer workspaceId) {
-        this(-1, name, format, design, workspaceId);
+    public Printer(String name, String format, String design, Workspace workspace) {
+        this(-1, name, format, design, workspace);
     }
 
-    public Printer(Integer id, String name, String format, String design, Integer workspaceId) {
+    public Printer(Integer id, String name, String format, String design, Workspace workspace) {
         this.id = id;
         this.name = name;
         this.format = format;
         this.design = design;
-        this.workspaceId = workspaceId;
+        this.workspace = workspace;
     }
 
     @Override
@@ -51,7 +54,7 @@ public class Printer {
         result = prime * result + ((format == null) ? 0 : format.hashCode());
         result = prime * result + ((id == null) ? 0 : id.hashCode());
         result = prime * result + ((name == null) ? 0 : name.hashCode());
-        result = prime * result + ((workspaceId == null) ? 0 : workspaceId.hashCode());
+        result = prime * result + ((workspace == null) ? 0 : workspace.hashCode());
         return result;
     }
 
@@ -84,18 +87,18 @@ public class Printer {
                 return false;
         } else if (!name.equals(other.name))
             return false;
-        if (workspaceId == null) {
-            if (other.workspaceId != null)
+        if (workspace == null) {
+            if (other.workspace != null)
                 return false;
-        } else if (!workspaceId.equals(other.workspaceId))
+        } else if (!workspace.equals(other.workspace))
             return false;
         return true;
     }
 
     @Override
     public String toString() {
-        return "Printer [id=" + id + ", name=" + name + ", format=" + format + ", design=" + design + ", workspaceId="
-                + workspaceId + "]\n";
+        return "Printer [id=" + id + ", name=" + name + ", format=" + format + ", design=" + design + ", workspace="
+                + workspace + "]\n";
     }
 
     public Integer getId() {
@@ -130,11 +133,11 @@ public class Printer {
         this.design = design;
     }
 
-    public Integer getWorkspaceId() {
-        return workspaceId;
+    public Workspace getWorkspace() {
+        return workspace;
     }
 
-    public void setWorkspaceId(Integer workspaceId) {
-        this.workspaceId = workspaceId;
+    public void setWorkspace(Workspace workspace) {
+        this.workspace = workspace;
     }
 }

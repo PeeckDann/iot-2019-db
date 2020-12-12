@@ -170,15 +170,17 @@ public class View {
     }
 
     // Desktop
-    private Desktop getDesktopInputs() {
+    private Desktop getDesktopInputs() throws SQLException {
         System.out.println("\nEnter name: ");
         String name = SCANNER.next();
         System.out.println("\nEnter hardware id: ");
         Integer hardware_id = SCANNER.nextInt();
+        Hardware hardware = hardwareController.getBy(hardware_id);
         System.out.println("\nEnter workspace id: ");
         Integer workspace_id = SCANNER.nextInt();
+        Workspace workspace = workspaceController.getBy(workspace_id);
 
-        return new Desktop(name, hardware_id, workspace_id);
+        return new Desktop(name, hardware, workspace);
     }
 
     private void getAllDesktops() throws SQLException {
@@ -272,15 +274,16 @@ public class View {
     }
 
     // IpPhone
-    private IpPhone getIpPhoneInputs() {
+    private IpPhone getIpPhoneInputs() throws SQLException {
         System.out.println("\nEnter name: ");
         String name = SCANNER.next();
         System.out.println("\nEnter number: ");
         String number = SCANNER.next();
         System.out.println("\nEnter workspace id: ");
         Integer workspace_id = SCANNER.nextInt();
+        Workspace workspace = workspaceController.getBy(workspace_id);
 
-        return new IpPhone(name, number, workspace_id);
+        return new IpPhone(name, number, workspace);
     }
 
     private void getAllIpPhones() throws SQLException {
@@ -320,15 +323,17 @@ public class View {
     }
 
     // Laptop
-    private Laptop getLaptopInputs() {
+    private Laptop getLaptopInputs() throws SQLException {
         System.out.println("\nEnter name: ");
         String name = SCANNER.next();
         System.out.println("\nEnter hardware id: ");
         Integer hardware_id = SCANNER.nextInt();
+        Hardware hardware = hardwareController.getBy(hardware_id);
         System.out.println("\nEnter worker id: ");
         Integer worker_id = SCANNER.nextInt();
+        Worker worker = workerController.getBy(worker_id);
 
-        return new Laptop(name, hardware_id, worker_id);
+        return new Laptop(name, hardware, worker);
     }
 
     private void getAllLaptops() throws SQLException {
@@ -418,7 +423,7 @@ public class View {
     }
 
     // Monitor
-    private Monitor getMonitorInputs() {
+    private Monitor getMonitorInputs() throws SQLException {
         System.out.println("\nEnter name: ");
         String name = SCANNER.next();
         System.out.println("\nEnter size: ");
@@ -429,8 +434,9 @@ public class View {
         String refresh_rate = SCANNER.next();
         System.out.println("\nEnter workspace id: ");
         Integer workspace_id = SCANNER.nextInt();
+        Workspace workspace = workspaceController.getBy(workspace_id);
 
-        return new Monitor(name, size, resolution, refresh_rate, workspace_id);
+        return new Monitor(name, size, resolution, refresh_rate, workspace);
     }
 
     private void getAllMonitors() throws SQLException {
@@ -470,13 +476,14 @@ public class View {
     }
 
     // Office
-    private Office getOfficeInputs() {
+    private Office getOfficeInputs() throws SQLException {
         System.out.println("\nEnter name: ");
         String name = SCANNER.next();
         System.out.println("\nEnter location id: ");
         Integer location_id = SCANNER.nextInt();
+        Location location = locationController.getBy(location_id);
 
-        return new Office(name, location_id);
+        return new Office(name, location);
     }
 
     private void getAllOffices() throws SQLException {
@@ -516,7 +523,7 @@ public class View {
     }
 
     // Printer
-    private Printer getPrinterInputs() {
+    private Printer getPrinterInputs() throws SQLException {
         System.out.println("\nEnter name: ");
         String name = SCANNER.next();
         System.out.println("\nEnter format: ");
@@ -525,8 +532,9 @@ public class View {
         String design = SCANNER.next();
         System.out.println("\nEnter workspace id: ");
         Integer workspace_id = SCANNER.nextInt();
+        Workspace workspace = workspaceController.getBy(workspace_id);
 
-        return new Printer(name, format, design, workspace_id);
+        return new Printer(name, format, design, workspace);
     }
 
     private void getAllPrinters() throws SQLException {
@@ -566,7 +574,7 @@ public class View {
     }
 
     // Router
-    private Router getRouterInputs() {
+    private Router getRouterInputs() throws SQLException {
         System.out.println("\nEnter name: ");
         String name = SCANNER.next();
         System.out.println("\nEnter frequency range: ");
@@ -575,8 +583,9 @@ public class View {
         String WAN = SCANNER.next();
         System.out.println("\nEnter office id: ");
         Integer office_id = SCANNER.nextInt();
+        Office office = officeController.getBy(office_id);
 
-        return new Router(name, frequency_range, WAN, office_id);
+        return new Router(name, frequency_range, WAN, office);
     }
 
     private void getAllRouters() throws SQLException {
@@ -664,13 +673,14 @@ public class View {
     }
 
     // Workspace
-    private Workspace getWorkspaceInputs() {
+    private Workspace getWorkspaceInputs() throws SQLException {
         System.out.println("\nEnter cabinet number: ");
         Integer cabinet_number = SCANNER.nextInt();
         System.out.println("\nEnter office id: ");
         Integer office_id = SCANNER.nextInt();
+        Office office = officeController.getBy(office_id);
 
-        return new Workspace(cabinet_number, office_id);
+        return new Workspace(cabinet_number, office);
     }
 
     private void getAllWorkspaces() throws SQLException {
@@ -710,13 +720,15 @@ public class View {
     }
 
     // WorkerHasOffice
-    private WorkerHasOffice getWorkerHasOfficeInputs() {
+    private WorkerHasOffice getWorkerHasOfficeInputs() throws SQLException {
         System.out.println("\nEnter worker id: ");
         Integer worker_id = SCANNER.nextInt();
+        Worker worker = workerController.getBy(worker_id);
         System.out.println("\nEnter office id: ");
         Integer office_id = SCANNER.nextInt();
+        Office office = officeController.getBy(office_id);
 
-        return new WorkerHasOffice(worker_id, office_id);
+        return new WorkerHasOffice(worker, office);
     }
 
     private void getAllWorkerHasOffices() throws SQLException {
@@ -756,13 +768,15 @@ public class View {
     }
 
     // WorkerHasWorkspace
-    private WorkerHasWorkspace getWorkerHasWorkspaceInputs() {
+    private WorkerHasWorkspace getWorkerHasWorkspaceInputs() throws SQLException {
         System.out.println("\nEnter worker id: ");
         Integer worker_id = SCANNER.nextInt();
+        Worker worker = workerController.getBy(worker_id);
         System.out.println("\nEnter workspace id: ");
         Integer workspace_id = SCANNER.nextInt();
+        Workspace workspace = workspaceController.getBy(workspace_id);
 
-        return new WorkerHasWorkspace(worker_id, workspace_id);
+        return new WorkerHasWorkspace(worker, workspace);
     }
 
     private void getAllWorkerHasWorkspaces() throws SQLException {

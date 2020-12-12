@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity(name = "monitor")
@@ -28,23 +30,24 @@ public class Monitor {
     @Column(name = "refresh_rate", length = 45)
     private String refreshRate;
 
-    @Column(name = "workspace_id")
-    private Integer workspaceId;
+    @ManyToOne
+    @JoinColumn(name = "workspace_id")
+    private Workspace workspace;
 
     public Monitor() {
     }
 
-    public Monitor(String name, String size, String resolution, String refreshRate, Integer workspaceId) {
-        this(-1, name, size, resolution, refreshRate, workspaceId);
+    public Monitor(String name, String size, String resolution, String refreshRate, Workspace workspace) {
+        this(-1, name, size, resolution, refreshRate, workspace);
     }
 
-    public Monitor(Integer id, String name, String size, String resolution, String refreshRate, Integer workspaceId) {
+    public Monitor(Integer id, String name, String size, String resolution, String refreshRate, Workspace workspace) {
         this.id = id;
         this.name = name;
         this.size = size;
         this.resolution = resolution;
         this.refreshRate = refreshRate;
-        this.workspaceId = workspaceId;
+        this.workspace = workspace;
     }
 
     @Override
@@ -56,7 +59,7 @@ public class Monitor {
         result = prime * result + ((refreshRate == null) ? 0 : refreshRate.hashCode());
         result = prime * result + ((resolution == null) ? 0 : resolution.hashCode());
         result = prime * result + ((size == null) ? 0 : size.hashCode());
-        result = prime * result + ((workspaceId == null) ? 0 : workspaceId.hashCode());
+        result = prime * result + ((workspace == null) ? 0 : workspace.hashCode());
         return result;
     }
 
@@ -94,10 +97,10 @@ public class Monitor {
                 return false;
         } else if (!size.equals(other.size))
             return false;
-        if (workspaceId == null) {
-            if (other.workspaceId != null)
+        if (workspace == null) {
+            if (other.workspace != null)
                 return false;
-        } else if (!workspaceId.equals(other.workspaceId))
+        } else if (!workspace.equals(other.workspace))
             return false;
         return true;
     }
@@ -105,7 +108,7 @@ public class Monitor {
     @Override
     public String toString() {
         return "Monitor [id=" + id + ", name=" + name + ", size=" + size + ", resolution=" + resolution
-                + ", refreshRate=" + refreshRate + ", workspaceId=" + workspaceId + "]\n";
+                + ", refreshRate=" + refreshRate + ", workspace=" + workspace + "]\n";
     }
 
     public Integer getId() {
@@ -148,11 +151,12 @@ public class Monitor {
         this.refreshRate = refreshRate;
     }
 
-    public Integer getWorkspaceId() {
-        return workspaceId;
+    public Workspace getWorkspace() {
+        return workspace;
     }
 
-    public void setWorkspaceId(Integer workspaceId) {
-        this.workspaceId = workspaceId;
+    public void setWorkspace(Workspace workspace) {
+        this.workspace = workspace;
     }
+
 }

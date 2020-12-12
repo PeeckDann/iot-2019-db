@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity(name = "laptop")
@@ -19,34 +21,36 @@ public class Laptop {
     @Column(name = "name", length = 45)
     private String name;
 
-    @Column(name = "hardware_id")
-    private Integer hardwareId;
+    @ManyToOne
+    @JoinColumn(name = "hardware_id")
+    private Hardware hardware;
 
-    @Column(name = "worker_id")
-    private Integer workerId;
+    @ManyToOne
+    @JoinColumn(name = "worker_id")
+    private Worker worker;
 
     public Laptop() {
     }
 
-    public Laptop(String name, Integer hardwareId, Integer workerId) {
-        this(-1, name, hardwareId, workerId);
+    public Laptop(String name, Hardware hardware, Worker worker) {
+        this(-1, name, hardware, worker);
     }
 
-    public Laptop(Integer id, String name, Integer hardwareId, Integer workerId) {
+    public Laptop(Integer id, String name, Hardware hardware, Worker worker) {
         this.id = id;
         this.name = name;
-        this.hardwareId = hardwareId;
-        this.workerId = workerId;
+        this.hardware = hardware;
+        this.worker = worker;
     }
 
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((hardwareId == null) ? 0 : hardwareId.hashCode());
+        result = prime * result + ((hardware == null) ? 0 : hardware.hashCode());
         result = prime * result + ((id == null) ? 0 : id.hashCode());
         result = prime * result + ((name == null) ? 0 : name.hashCode());
-        result = prime * result + ((workerId == null) ? 0 : workerId.hashCode());
+        result = prime * result + ((worker == null) ? 0 : worker.hashCode());
         return result;
     }
 
@@ -59,10 +63,10 @@ public class Laptop {
         if (getClass() != obj.getClass())
             return false;
         Laptop other = (Laptop) obj;
-        if (hardwareId == null) {
-            if (other.hardwareId != null)
+        if (hardware == null) {
+            if (other.hardware != null)
                 return false;
-        } else if (!hardwareId.equals(other.hardwareId))
+        } else if (!hardware.equals(other.hardware))
             return false;
         if (id == null) {
             if (other.id != null)
@@ -74,17 +78,17 @@ public class Laptop {
                 return false;
         } else if (!name.equals(other.name))
             return false;
-        if (workerId == null) {
-            if (other.workerId != null)
+        if (worker == null) {
+            if (other.worker != null)
                 return false;
-        } else if (!workerId.equals(other.workerId))
+        } else if (!worker.equals(other.worker))
             return false;
         return true;
     }
 
     @Override
     public String toString() {
-        return "Laptop [id=" + id + ", name=" + name + ", hardwareId=" + hardwareId + ", workerId=" + workerId + "]\n";
+        return "Laptop [id=" + id + ", name=" + name + ", hardware=" + hardware + ", worker=" + worker + "]/n";
     }
 
     public Integer getId() {
@@ -103,19 +107,20 @@ public class Laptop {
         this.name = name;
     }
 
-    public Integer getHardwareId() {
-        return hardwareId;
+    public Hardware getHardware() {
+        return hardware;
     }
 
-    public void setHardwareId(Integer hardwareId) {
-        this.hardwareId = hardwareId;
+    public void setHardware(Hardware hardware) {
+        this.hardware = hardware;
     }
 
-    public Integer getWorkerId() {
-        return workerId;
+    public Worker getWorker() {
+        return worker;
     }
 
-    public void setWorkerId(Integer workerId) {
-        this.workerId = workerId;
+    public void setWorker(Worker worker) {
+        this.worker = worker;
     }
+
 }

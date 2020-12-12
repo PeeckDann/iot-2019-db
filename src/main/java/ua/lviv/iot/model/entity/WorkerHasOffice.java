@@ -5,9 +5,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-@Entity(name = "worker_has_office")
+@Entity(name = "workerhasoffice")
 @Table(name = "worker_has_office")
 public class WorkerHasOffice {
 
@@ -16,23 +18,25 @@ public class WorkerHasOffice {
     @Column(name = "id")
     private Integer id;
 
-    @Column(name = "worker_id")
-    private Integer workerId;
+    @ManyToOne
+    @JoinColumn(name = "worker_id")
+    private Worker worker;
 
-    @Column(name = "office_id")
-    private Integer officeId;
+    @ManyToOne
+    @JoinColumn(name = "office_id")
+    private Office office;
 
     public WorkerHasOffice() {
     }
 
-    public WorkerHasOffice(Integer workerId, Integer officeId) {
-        this(-1, workerId, officeId);
+    public WorkerHasOffice(Worker worker, Office office) {
+        this(-1, worker, office);
     }
 
-    public WorkerHasOffice(Integer id, Integer workerId, Integer officeId) {
+    public WorkerHasOffice(Integer id, Worker worker, Office office) {
         this.id = id;
-        this.workerId = workerId;
-        this.officeId = officeId;
+        this.worker = worker;
+        this.office = office;
     }
 
     @Override
@@ -40,8 +44,8 @@ public class WorkerHasOffice {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((id == null) ? 0 : id.hashCode());
-        result = prime * result + ((officeId == null) ? 0 : officeId.hashCode());
-        result = prime * result + ((workerId == null) ? 0 : workerId.hashCode());
+        result = prime * result + ((office == null) ? 0 : office.hashCode());
+        result = prime * result + ((worker == null) ? 0 : worker.hashCode());
         return result;
     }
 
@@ -59,22 +63,22 @@ public class WorkerHasOffice {
                 return false;
         } else if (!id.equals(other.id))
             return false;
-        if (officeId == null) {
-            if (other.officeId != null)
+        if (office == null) {
+            if (other.office != null)
                 return false;
-        } else if (!officeId.equals(other.officeId))
+        } else if (!office.equals(other.office))
             return false;
-        if (workerId == null) {
-            if (other.workerId != null)
+        if (worker == null) {
+            if (other.worker != null)
                 return false;
-        } else if (!workerId.equals(other.workerId))
+        } else if (!worker.equals(other.worker))
             return false;
         return true;
     }
 
     @Override
     public String toString() {
-        return "WorkerHasOffice [id=" + id + ", workerId=" + workerId + ", officeId=" + officeId + "]\n";
+        return "WorkerHasOffice [id=" + id + ", worker=" + worker + ", office=" + office + "]\n";
     }
 
     public Integer getId() {
@@ -85,20 +89,20 @@ public class WorkerHasOffice {
         this.id = id;
     }
 
-    public Integer getWorkerId() {
-        return workerId;
+    public Worker getWorker() {
+        return worker;
     }
 
-    public void setWorkerId(Integer workerId) {
-        this.workerId = workerId;
+    public void setWorker(Worker worker) {
+        this.worker = worker;
     }
 
-    public Integer getOfficeId() {
-        return officeId;
+    public Office getOffice() {
+        return office;
     }
 
-    public void setOfficeId(Integer officeId) {
-        this.officeId = officeId;
+    public void setOffice(Office office) {
+        this.office = office;
     }
 
 }

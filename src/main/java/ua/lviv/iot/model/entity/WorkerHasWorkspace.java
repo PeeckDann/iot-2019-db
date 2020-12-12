@@ -5,9 +5,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-@Entity(name = "worker_has_workspace")
+@Entity(name = "workerhasworkspace")
 @Table(name = "worker_has_workspace")
 public class WorkerHasWorkspace {
 
@@ -16,23 +18,25 @@ public class WorkerHasWorkspace {
     @Column(name = "id")
     private Integer id;
 
-    @Column(name = "worker_id")
-    private Integer workerId;
+    @ManyToOne
+    @JoinColumn(name = "worker_id")
+    private Worker worker;
 
-    @Column(name = "workspace_id")
-    private Integer workspaceId;
+    @ManyToOne
+    @JoinColumn(name = "workspace_id")
+    private Workspace workspace;
 
     public WorkerHasWorkspace() {
     }
 
-    public WorkerHasWorkspace(Integer workerId, Integer workspaceId) {
-        this(-1, workerId, workspaceId);
+    public WorkerHasWorkspace(Worker worker, Workspace workspace) {
+        this(-1, worker, workspace);
     }
 
-    public WorkerHasWorkspace(Integer id, Integer workerId, Integer workspaceId) {
+    public WorkerHasWorkspace(Integer id, Worker worker, Workspace workspace) {
         this.id = id;
-        this.workerId = workerId;
-        this.workspaceId = workspaceId;
+        this.worker = worker;
+        this.workspace = workspace;
     }
 
     @Override
@@ -40,8 +44,8 @@ public class WorkerHasWorkspace {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((id == null) ? 0 : id.hashCode());
-        result = prime * result + ((workerId == null) ? 0 : workerId.hashCode());
-        result = prime * result + ((workspaceId == null) ? 0 : workspaceId.hashCode());
+        result = prime * result + ((worker == null) ? 0 : worker.hashCode());
+        result = prime * result + ((workspace == null) ? 0 : workspace.hashCode());
         return result;
     }
 
@@ -59,22 +63,22 @@ public class WorkerHasWorkspace {
                 return false;
         } else if (!id.equals(other.id))
             return false;
-        if (workerId == null) {
-            if (other.workerId != null)
+        if (worker == null) {
+            if (other.worker != null)
                 return false;
-        } else if (!workerId.equals(other.workerId))
+        } else if (!worker.equals(other.worker))
             return false;
-        if (workspaceId == null) {
-            if (other.workspaceId != null)
+        if (workspace == null) {
+            if (other.workspace != null)
                 return false;
-        } else if (!workspaceId.equals(other.workspaceId))
+        } else if (!workspace.equals(other.workspace))
             return false;
         return true;
     }
 
     @Override
     public String toString() {
-        return "WorkerHasWorkspace [id=" + id + ", workerId=" + workerId + ", workspaceId=" + workspaceId + "]\n";
+        return "WorkerHasWorkspace [id=" + id + ", worker=" + worker + ", workspace=" + workspace + "]\n";
     }
 
     public Integer getId() {
@@ -85,20 +89,20 @@ public class WorkerHasWorkspace {
         this.id = id;
     }
 
-    public Integer getWorkerId() {
-        return workerId;
+    public Worker getWorker() {
+        return worker;
     }
 
-    public void setWorkerId(Integer workerId) {
-        this.workerId = workerId;
+    public void setWorker(Worker worker) {
+        this.worker = worker;
     }
 
-    public Integer getWorkspaceId() {
-        return workspaceId;
+    public Workspace getWorkspace() {
+        return workspace;
     }
 
-    public void setWorkspaceId(Integer workspaceId) {
-        this.workspaceId = workspaceId;
+    public void setWorkspace(Workspace workspace) {
+        this.workspace = workspace;
     }
 
 }

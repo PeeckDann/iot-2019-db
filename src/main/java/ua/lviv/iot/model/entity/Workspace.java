@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity(name = "workspace")
@@ -19,20 +21,21 @@ public class Workspace {
     @Column(name = "cabinet_number")
     private Integer cabinetNumber;
 
-    @Column(name = "office_id")
-    private Integer officeId;
+    @ManyToOne
+    @JoinColumn(name = "office_id")
+    private Office office;
 
     public Workspace() {
     }
 
-    public Workspace(Integer cabinetNumber, Integer officeId) {
-        this(-1, cabinetNumber, officeId);
+    public Workspace(Integer cabinetNumber, Office office) {
+        this(-1, cabinetNumber, office);
     }
 
-    public Workspace(Integer id, Integer cabinetNumber, Integer officeId) {
+    public Workspace(Integer id, Integer cabinetNumber, Office office) {
         this.id = id;
         this.cabinetNumber = cabinetNumber;
-        this.officeId = officeId;
+        this.office = office;
     }
 
     @Override
@@ -41,7 +44,7 @@ public class Workspace {
         int result = 1;
         result = prime * result + ((cabinetNumber == null) ? 0 : cabinetNumber.hashCode());
         result = prime * result + ((id == null) ? 0 : id.hashCode());
-        result = prime * result + ((officeId == null) ? 0 : officeId.hashCode());
+        result = prime * result + ((office == null) ? 0 : office.hashCode());
         return result;
     }
 
@@ -64,17 +67,17 @@ public class Workspace {
                 return false;
         } else if (!id.equals(other.id))
             return false;
-        if (officeId == null) {
-            if (other.officeId != null)
+        if (office == null) {
+            if (other.office != null)
                 return false;
-        } else if (!officeId.equals(other.officeId))
+        } else if (!office.equals(other.office))
             return false;
         return true;
     }
 
     @Override
     public String toString() {
-        return "Workspace [id=" + id + ", cabinetNumber=" + cabinetNumber + ", officeId=" + officeId + "]\n";
+        return "Workspace [id=" + id + ", cabinetNumber=" + cabinetNumber + ", office=" + office + "]\n";
     }
 
     public Integer getId() {
@@ -93,11 +96,12 @@ public class Workspace {
         this.cabinetNumber = cabinetNumber;
     }
 
-    public Integer getOfficeId() {
-        return officeId;
+    public Office getOffice() {
+        return office;
     }
 
-    public void setOfficeId(Integer officeId) {
-        this.officeId = officeId;
+    public void setOffice(Office office) {
+        this.office = office;
     }
+
 }

@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity(name = "office")
@@ -19,20 +21,21 @@ public class Office {
     @Column(name = "name", length = 45)
     private String name;
 
-    @Column(name = "location_id")
-    private Integer locationId;
+    @OneToOne
+    @JoinColumn(name = "location_id")
+    private Location location;
 
     public Office() {
     }
 
-    public Office(String name, Integer locationId) {
-        this(-1, name, locationId);
+    public Office(String name, Location location) {
+        this(-1, name, location);
     }
 
-    public Office(Integer id, String name, Integer locationId) {
+    public Office(Integer id, String name, Location location) {
         this.id = id;
         this.name = name;
-        this.locationId = locationId;
+        this.location = location;
     }
 
     @Override
@@ -40,7 +43,7 @@ public class Office {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((id == null) ? 0 : id.hashCode());
-        result = prime * result + ((locationId == null) ? 0 : locationId.hashCode());
+        result = prime * result + ((location == null) ? 0 : location.hashCode());
         result = prime * result + ((name == null) ? 0 : name.hashCode());
         return result;
     }
@@ -59,10 +62,10 @@ public class Office {
                 return false;
         } else if (!id.equals(other.id))
             return false;
-        if (locationId == null) {
-            if (other.locationId != null)
+        if (location == null) {
+            if (other.location != null)
                 return false;
-        } else if (!locationId.equals(other.locationId))
+        } else if (!location.equals(other.location))
             return false;
         if (name == null) {
             if (other.name != null)
@@ -74,7 +77,7 @@ public class Office {
 
     @Override
     public String toString() {
-        return "Office [id=" + id + ", name=" + name + ", locationId=" + locationId + "]\n";
+        return "Office [id=" + id + ", name=" + name + ", location=" + location + "]\n";
     }
 
     public Integer getId() {
@@ -93,11 +96,12 @@ public class Office {
         this.name = name;
     }
 
-    public Integer getLocationId() {
-        return locationId;
+    public Location getLocation() {
+        return location;
     }
 
-    public void setLocationId(Integer locationId) {
-        this.locationId = locationId;
+    public void setLocation(Location location) {
+        this.location = location;
     }
+
 }

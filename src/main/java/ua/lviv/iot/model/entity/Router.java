@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity(name = "router")
@@ -25,22 +27,23 @@ public class Router {
     @Column(name = "WAN", length = 45)
     private String WAN;
 
-    @Column(name = "office_id")
-    private Integer officeId;
+    @ManyToOne
+    @JoinColumn(name = "office_id")
+    private Office office;
 
     public Router() {
     }
 
-    public Router(String name, String frequencyRange, String wAN, Integer officeId) {
-        this(-1, name, frequencyRange, wAN, officeId);
+    public Router(String name, String frequencyRange, String wAN, Office office) {
+        this(-1, name, frequencyRange, wAN, office);
     }
 
-    public Router(Integer id, String name, String frequencyRange, String wAN, Integer officeId) {
+    public Router(Integer id, String name, String frequencyRange, String wAN, Office office) {
         this.id = id;
         this.name = name;
         this.frequencyRange = frequencyRange;
         WAN = wAN;
-        this.officeId = officeId;
+        this.office = office;
     }
 
     @Override
@@ -51,7 +54,7 @@ public class Router {
         result = prime * result + ((frequencyRange == null) ? 0 : frequencyRange.hashCode());
         result = prime * result + ((id == null) ? 0 : id.hashCode());
         result = prime * result + ((name == null) ? 0 : name.hashCode());
-        result = prime * result + ((officeId == null) ? 0 : officeId.hashCode());
+        result = prime * result + ((office == null) ? 0 : office.hashCode());
         return result;
     }
 
@@ -84,10 +87,10 @@ public class Router {
                 return false;
         } else if (!name.equals(other.name))
             return false;
-        if (officeId == null) {
-            if (other.officeId != null)
+        if (office == null) {
+            if (other.office != null)
                 return false;
-        } else if (!officeId.equals(other.officeId))
+        } else if (!office.equals(other.office))
             return false;
         return true;
     }
@@ -95,7 +98,7 @@ public class Router {
     @Override
     public String toString() {
         return "Router [id=" + id + ", name=" + name + ", frequencyRange=" + frequencyRange + ", WAN=" + WAN
-                + ", officeId=" + officeId + "]\n";
+                + ", office=" + office + "]\n";
     }
 
     public Integer getId() {
@@ -130,12 +133,12 @@ public class Router {
         WAN = wAN;
     }
 
-    public Integer getOfficeId() {
-        return officeId;
+    public Office getOffice() {
+        return office;
     }
 
-    public void setOfficeId(Integer officeId) {
-        this.officeId = officeId;
+    public void setOffice(Office office) {
+        this.office = office;
     }
 
 }
